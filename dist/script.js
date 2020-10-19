@@ -966,7 +966,7 @@ var modals = function modals() {
   ;
 
   function bindModal(modalWindow, modalOpenSelector, modalCloseSelector) {
-    var closeClickOverlay = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : true;
+    var removeOpenSelector = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     var modal = document.querySelector(modalWindow),
         modalOpenBtn = document.querySelectorAll(modalOpenSelector),
         modalCloseBtn = document.querySelectorAll(modalCloseSelector),
@@ -976,6 +976,11 @@ var modals = function modals() {
       button.addEventListener('click', function (e) {
         if (e.target) {
           e.preventDefault();
+        } // Убираем кнопку вызова модального окна
+
+
+        if (removeOpenSelector) {
+          button.remove();
         } // Функционал, чтобы закрывать все окна при открытии друого окна
 
 
@@ -984,10 +989,7 @@ var modals = function modals() {
         });
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
-        document.body.style.marginRight = "".concat(scroll, "px"); //   // Если кнопка открытия - это подарок, убрать его со страницы 
-        //   if (modalOpenBtn.classList.contains('fixed-gift')) {
-        //     modalOpenBtn.style.display = 'none';
-        //   }
+        document.body.style.marginRight = "".concat(scroll, "px");
       });
     });
     modalCloseBtn.forEach(function (button) {
@@ -997,7 +999,7 @@ var modals = function modals() {
     }); // Закрытие окна при клике на подложку
 
     modal.addEventListener('click', function (e) {
-      if (e.target === modal && closeClickOverlay) {
+      if (e.target === modal) {
         closeModal(modalWindow);
       }
     });
@@ -1017,13 +1019,19 @@ var modals = function modals() {
 
       if (!display) {
         document.querySelector(selector).style.display = 'block';
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = 'hidden'; // Страница не 'прыгает' после закрытия
+
+        var scroll = calcScroll();
+        document.body.style.marginRight = "".concat(scroll, "px");
       }
     }, time);
   } // Функция, чтобы скролл не прыгал при открытии модального окна
+  // Доработать, чтобы подарок не прыгал
 
 
   function calcScroll() {
+    // // Переменная для фиксированного элемента(подарка)
+    // const fixedElement = fixedSelector.querySelector(fixedSelector);
     var div = document.createElement('div'); // Задаем размеры, чтобы блок занимал какое-то место на странице
 
     div.style.width = '50px';
@@ -1033,14 +1041,16 @@ var modals = function modals() {
     document.body.append(div); // Вычисление размера прокрутки программно, так как размеры экрана у всех разные
 
     var scrollWidth = div.offsetWidth - div.clientWidth;
-    div.remove();
+    div.remove(); // // Что делаем с фиксированным элементом
+    // fixedElement.style.right = '4rem';
+
     return scrollWidth;
   }
 
   bindModal('.popup-design', '.button-design', '.popup-close');
-  bindModal('.popup-consultation', '.button-consultation', '.popup-close'); // bindModal('.popup-gift', '.fixed-gift', '.popup-close');
-
-  showModalByTime('.popup-consultation', 60000);
+  bindModal('.popup-consultation', '.button-consultation', '.popup-close');
+  bindModal('.popup-gift', '.fixed-gift', '.popup-close', true);
+  showModalByTime('.popup-consultation', 5000);
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (modals);
