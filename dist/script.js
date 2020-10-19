@@ -952,6 +952,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var modals = function modals() {
+  // Переменная для слежения, была ли нажата любая кнопка
+  var btnPressed;
+
   function closeModal(modalWindow) {
     var modal = document.querySelector(modalWindow),
         windows = document.querySelectorAll('[data-modal]');
@@ -976,8 +979,9 @@ var modals = function modals() {
       button.addEventListener('click', function (e) {
         if (e.target) {
           e.preventDefault();
-        } // Убираем кнопку вызова модального окна
+        }
 
+        btnPressed = true; // Убираем кнопку вызова модального окна
 
         if (removeOpenSelector) {
           button.remove();
@@ -985,7 +989,8 @@ var modals = function modals() {
 
 
         windows.forEach(function (window) {
-          return window.style.display = 'none';
+          window.style.display = 'none';
+          window.classList.add('animated', 'fadeIn');
         });
         modal.style.display = 'block';
         document.body.style.overflow = 'hidden';
@@ -1012,6 +1017,7 @@ var modals = function modals() {
       // Переменная для определения, открыты ли модальные окна
       var display;
       document.querySelectorAll('[data-modal]').forEach(function (item) {
+        // Здесь добавить, что если вызывали окно уже, то не открывать
         if (getComputedStyle(item).display !== 'none') {
           display = 'block';
         }
@@ -1047,9 +1053,21 @@ var modals = function modals() {
     return scrollWidth;
   }
 
+  function openModalByScroll(modalOpenSelector) {
+    window.addEventListener('scroll', function () {
+      // Оптимизация под старые браузеры
+      var scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
+
+      if (!btnPressed && window.pageYOffset + document.documentElement.clientHeight >= scrollHeight) {
+        document.querySelector(modalOpenSelector).click();
+      }
+    });
+  }
+
   bindModal('.popup-design', '.button-design', '.popup-close');
   bindModal('.popup-consultation', '.button-consultation', '.popup-close');
   bindModal('.popup-gift', '.fixed-gift', '.popup-close', true);
+  openModalByScroll('.fixed-gift');
   showModalByTime('.popup-consultation', 5000);
 };
 
