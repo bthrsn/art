@@ -90,7 +90,9 @@ gulp.task("build-prod-js", () => {
                         ]
                       }
                 }))
-                .pipe(ghPages(dist));
+                .pipe(gulp.dest(dist));  
 });
+
+
 
 gulp.task("default", gulp.parallel("watch", "build"));
