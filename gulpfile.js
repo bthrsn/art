@@ -1,8 +1,9 @@
 "use strict";
 
-const gulp = require("gulp");
-const webpack = require("webpack-stream");
-const browsersync = require("browser-sync");
+const gulp = require("gulp"),
+      webpack = require("webpack-stream"),
+      browsersync = require("browser-sync"),
+      ghPages = require('gulp-gh-pages');
 
 const dist = "./dist/";
 
@@ -89,7 +90,7 @@ gulp.task("build-prod-js", () => {
                         ]
                       }
                 }))
-                .pipe(gulp.dest(dist));
+                .pipe(ghPages(dist));
 });
 
 gulp.task("default", gulp.parallel("watch", "build"));
