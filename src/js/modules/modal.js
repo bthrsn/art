@@ -125,7 +125,7 @@ const modals = () => {
   bindModal('.popup-consultation', '.button-consultation', '.popup-close');
   bindModal('.popup-gift', '.fixed-gift', '.popup-close', true);
   openModalByScroll('.fixed-gift');
-  showModalByTime('.popup-consultation', 5000);
+  // showModalByTime('.popup-consultation', 60000);
 
 }
 export default modals;
