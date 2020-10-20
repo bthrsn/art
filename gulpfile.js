@@ -93,6 +93,9 @@ gulp.task("build-prod-js", () => {
                 .pipe(gulp.dest(dist));  
 });
 
-
+gulp.task('deploy-gh-pages', function() {
+  return gulp.src(dist)
+    .pipe(ghPages());
+});
 
 gulp.task("default", gulp.parallel("watch", "build"));
