@@ -14,6 +14,12 @@ const forms = () => {
     ok: 'assets/img/ok.png',
     fail: 'assets/img/fail.png',
   };
+  
+// Переменная с путями изображений
+const path = {
+  designer: 'assets/server.php',
+  question: 'assets/question.php'
+}
 
   // Функция для отправки данных
   const postData = async (url, data) => {
@@ -36,23 +42,43 @@ const forms = () => {
       let statusMessage = document.createElement('div');
       statusMessage.classList.add('status')
       item.parentNode.appendChild(statusMessage);
+      
+      // Скрываем форму по ТЗ через animate.css
+      item.classList.add('animated', 'fadeOutUp');
+      // Через некоторое время совсем убираем форму со страницы
+      setTimeout(() => {
+        item.style.display = 'none'
+      }, 400);
+      
+      // Отображение статуса сообщения
+      let statusImg = document.createElement('img');
+      statusImg.setAttribute('src', message.spinner);
+      statusImg.classList.add('animated', 'fadeInUp');
+      statusMessage.append(statusImg);
+      
+      // Добавить текстовое сообщение
+      let textMessage = document.createElement('div');
+      textMessage.textContent = message.loading;
+      statusMessage.append(textMessage);
 
       const formData = new FormData(item);
-      if (item.getAttribute('data-calc') === 'end') {
-        for (let key in state) {
-          formData.append(key, state[key]);
-        }
-      }
+      let api;
+      item.closest('.popup-design') ? api = path.designer : path.question; 
+      console.log(api);
 
       // Перевод в формат json
       // const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-      postData('assets/server.php', formData)
+      postData(api, formData)
         .then(res => {
           console.log(res);
+          statusImg.setAttribute('src', message.ok);
           statusMessage.textContent = message.success;
         })
-        .catch(() => statusMessage.textContent = message.failure)
+        .catch(() => {
+          statusImg.setAttribute('src', message.fail);
+          statusMessage.textContent = message.failure; 
+        })
         .finally(() => {
           clearInputs();
           setTimeout(() => {
