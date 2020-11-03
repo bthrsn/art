@@ -1,20 +1,22 @@
 
-const forms = (state) => {
+const forms = () => {
 
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input');
 
-  checkNumInputs('input[name="user_phone"]');
+  // checkNumInputs('input[name="user_phone"]');
 
   const message = {
     loading: 'Загрузка...',
     success: 'Спасибо! Мы скоро с вами свяжемся',
-    failure: 'Что-то пошло не так...' 
+    failure: 'Что-то пошло не так...',
+    spinner: 'assets/img/spinner.gif',
+    ok: 'assets/img/ok.png',
+    fail: 'assets/img/fail.png',
   };
 
   // Функция для отправки данных
   const postData = async (url, data) => {
-    document.querySelector('.status').textContent = message.loading;
     let result = await fetch(url, {
       method: "POST",
       body: data
@@ -31,9 +33,9 @@ const forms = (state) => {
     item.addEventListener('submit', (event) => {
       event.preventDefault();
 
-      const statusMessage = document.createElement('div');
+      let statusMessage = document.createElement('div');
       statusMessage.classList.add('status')
-      item.append(statusMessage);
+      item.parentNode.appendChild(statusMessage);
 
       const formData = new FormData(item);
       if (item.getAttribute('data-calc') === 'end') {

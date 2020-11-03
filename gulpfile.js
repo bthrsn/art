@@ -5,7 +5,8 @@ const gulp = require("gulp"),
       browsersync = require("browser-sync"),
       ghPages = require('gulp-gh-pages');
 
-const dist = "./dist/";
+// const dist = "./dist/";
+const dist = "E:\\OpenServer\\domains\\art";
 
 gulp.task("copy-html", () => {
     return gulp.src("./src/index.html")
