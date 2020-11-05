@@ -7,9 +7,9 @@ const checkTextInputs = (selector) => {
       if (e.key.match(/[^?!,.а-яА-ЯёЁ0-9]/ig)) {
         e.preventDefault();
       }
-      // input.addEventListener('input', () => {
-      //   input.value = input.value.replace(/[a-zA-Z]/, '');
-      // });
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/[a-zA-Z]/g, '');
+      });
     });
   });
 };
