@@ -1,3 +1,4 @@
+import {postData} from '../services/requests';
 
 const forms = () => {
 
@@ -19,15 +20,6 @@ const path = {
   designer: 'assets/server.php',
   question: 'assets/question.php'
 };
-
-  // Функция для отправки данных
-  const postData = async (url, data) => {
-    let result = await fetch(url, {
-      method: "POST",
-      body: data
-    });
-    return await result.text();
-  };
 
   // Функция для очищения инпутов
   const clearInputs = () => {
