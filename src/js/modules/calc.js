@@ -15,9 +15,9 @@ function calc(size, material, options, promocode, result) {
     
       // Условие, что без заполнения первого и второго блока не будет выводиться сумма и условие для промокода
       if (sizeBlock.value === '' || materialBlock.value === '') {
-        resultBlock.textContent = 'Пожалуйста выберите размер и материал картины'; 
+        resultBlock.textContent = 'Пожалуйста, выберите размер и материал картины'; 
       } else if (promoCodeBlock.value === 'IWANTPOPART') {
-          resultBlock.textContent = Math.round(sum * 0,7);
+          resultBlock.textContent = Math.round(sum * 0.7);
       } else {
         resultBlock.textContent = sum;
       }
