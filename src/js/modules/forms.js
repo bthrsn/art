@@ -3,7 +3,7 @@ import {postData} from '../services/requests';
 const forms = (state) => {
 
   const form = document.querySelectorAll('form'),
-        inputs = document.querySelectorAll('input'),
+        inputs = document.querySelectorAll('input, textarea'),
         selects = document.querySelectorAll('select'),
         resultCalcBlock = document.querySelector('.calc-price'),
         upload = document.querySelectorAll('[name = "upload"]');
@@ -37,13 +37,12 @@ const path = {
   upload.forEach(item => {
     item.addEventListener('input', () => {
       console.log(item.files[0]);
-      
       // Переменная для подставления многоточия
       let dots;
       // Техническая переменная для сокращения кода
       const tech = item.files[0].name.split('.');
       // Условие на проверку длины названия изображения
-      tech.length > 6 ? dots = '...' : dots = '.';
+      tech[0].length > 6 ? dots = '...' : dots = '.';
       const name = tech[0].substring(0, 6) + dots + tech[1];
       
       // Скрипт для изменения текста "Файл не выбран" после загрузки изображения

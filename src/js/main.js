@@ -22,3 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
     showMoreStyles('.button-styles', '#styles .row');
     calc('#size', '#material', '#options', '.promocode', '.calc-price');
 });
+
+
+// Ошибка - передается только 1 значение - взмжно дело в цикле for in
+// Ошибка пропал текст файл не выбран

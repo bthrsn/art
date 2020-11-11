@@ -28,7 +28,4 @@ function calc(size, material, options, promocode, result) {
     promoCodeBlock.addEventListener('input', calcFunc);   
 }
 
-// Ошибка - передается только картинка - значит ошибка в формах, так как в изменение modalState значения выводятся в консоль - возможно дело в том, что нужно добавить данные к рисунку!
-
-
 export default calc;
