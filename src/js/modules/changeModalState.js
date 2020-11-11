@@ -8,9 +8,13 @@ const changeModalState = (state) => {
 
   // Привязываем value элемента к ключу и значению в передаче данных на сервер
   function bindActionToElems (event, elem) {
-    elem.forEach((item) => {
+    elem.forEach((item, i) => {
       item.addEventListener(event, () => {
+      if (elem.length > 1) {
+        state['value'] = i;
+      } else {
         state['value'] = item.value;
+      }
         console.log(state);
       });
     });
@@ -19,7 +23,7 @@ const changeModalState = (state) => {
   bindActionToElems('change', size);
   bindActionToElems('change', material,);
   bindActionToElems('change', options,);
-  bindActionToElems('input', sum,);
+  bindActionToElems('change', sum,);
 
 };
 

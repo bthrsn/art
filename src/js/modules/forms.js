@@ -5,6 +5,7 @@ const forms = (state) => {
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
         selects = document.querySelectorAll('select'),
+        resultCalcBlock = document.querySelector('.calc-price'),
         upload = document.querySelectorAll('[name = "upload"]');
 
   const message = {
@@ -24,7 +25,8 @@ const path = {
 
   // Функция для очищения инпутов
   const clearInputs = () => {
-    selects.forEach(select => select.value = 0);
+    resultCalcBlock.textContent = 'Для расчета нужно выбрать размер картины и материал картины';
+    selects.forEach(select => select.value = '');
     inputs.forEach(input => input.value ='');
     upload.forEach(item => {
       item.previousElementSibling.textContent = 'Файл не выбран';
@@ -83,6 +85,7 @@ const path = {
         for (let key in state) {
           formData.append(key, state[key]);
         }
+        formData.append('price', resultCalcBlock.textContent);
       }
       // Переменная для формирования динамического пути отправки данных
       let api;
