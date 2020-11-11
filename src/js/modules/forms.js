@@ -1,9 +1,10 @@
 import {postData} from '../services/requests';
 
-const forms = () => {
+const forms = (state) => {
 
   const form = document.querySelectorAll('form'),
         inputs = document.querySelectorAll('input'),
+        selects = document.querySelectorAll('select'),
         upload = document.querySelectorAll('[name = "upload"]');
 
   const message = {
@@ -15,7 +16,7 @@ const forms = () => {
     fail: './assets/img/fail.png',
   };
   
-// Переменная с путями изображений
+// Переменная с путями для отправки данных
 const path = {
   designer: 'assets/server.php',
   question: 'assets/question.php'
@@ -23,6 +24,7 @@ const path = {
 
   // Функция для очищения инпутов
   const clearInputs = () => {
+    selects.forEach(select => select.value = 0);
     inputs.forEach(input => input.value ='');
     upload.forEach(item => {
       item.previousElementSibling.textContent = 'Файл не выбран';
@@ -75,8 +77,13 @@ const path = {
       textMessage.textContent = message.loading;
       statusMessage.append(textMessage);
 
+      // Отправка данных
       const formData = new FormData(item);
-      
+      if (item.classList.contains('calc-form')) {
+        for (let key in state) {
+          formData.append(key, state[key]);
+        }
+      }
       // Переменная для формирования динамического пути отправки данных
       let api;
       item.closest('.popup-design') || item.classList.contains('calc-form') ? api = path.designer : api = path.question; 

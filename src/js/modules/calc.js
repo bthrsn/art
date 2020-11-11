@@ -28,5 +28,12 @@ function calc(size, material, options, promocode, result) {
     promoCodeBlock.addEventListener('input', calcFunc);   
 }
 
+// Нужно отправить все данные на сервер для этого
+// сделать changeModalState - который берет все данные их калькулятора + сумму
+// Добавить его в forms в main.js
+// Добавить в forms аргумент state и расяписать условие - если содержит класс формы, то передать ключ и знанчение в него
+
+// Ошибка - передается только картинка - значит ошибка в формах, так как в изменение modalState значения выводятся в консоль
+
 
 export default calc;
