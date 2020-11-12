@@ -81,10 +81,10 @@ const path = {
       // Отправка данных
       const formData = new FormData(item);
       if (item.classList.contains('calc-form')) {
-        for (let key in state) {
-          formData.append(key, state[key]);
-        }
-        formData.append('price', resultCalcBlock.textContent);
+          for (let key in state) {
+            formData.append(key, state[key]);
+          }
+        formData.append('final-price', resultCalcBlock.textContent);
       }
       // Переменная для формирования динамического пути отправки данных
       let api;

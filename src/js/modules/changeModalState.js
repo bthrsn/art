@@ -2,24 +2,24 @@
 const changeModalState = (state) => {
   const size = document.querySelectorAll('#size'),
         material = document.querySelectorAll('#material'),
-        options = document.querySelectorAll('#options');
-        // sum = document.querySelectorAll('.calc-price');
+        options = document.querySelectorAll('#options'),
+        promocode = document.querySelectorAll('.promocode');
 
 
   // Привязываем value элемента к ключу и значению в передаче данных на сервер
-  function bindActionToElems (event, elem) {
-    elem.forEach((item, i) => {
+  function bindActionToElems (event, elem, prop) {
+    elem.forEach((item) => {
       item.addEventListener(event, () => {
-        state['value'] = item.value;
+        state[prop] = item.value;
         console.log(state);
       });
     });
   }
 
-  bindActionToElems('change', size);
-  bindActionToElems('change', material);
-  bindActionToElems('change', options);
-  // bindActionToElems('change', sum,);
+  bindActionToElems('change', size, 'size');
+  bindActionToElems('change', material, 'material');
+  bindActionToElems('change', options, 'options');
+  bindActionToElems('input', promocode, 'promocode');
 
 };
 
