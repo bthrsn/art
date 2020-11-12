@@ -13,7 +13,7 @@ function calc(size, material, options, promocode, result) {
   
 // Реализовать функционал когда value устанавливается динамически из файла prices.json
 // При событии change - обращаемся к этому файлу, получаем у него значение и устанавливаем в качестве value option'a 
-  // Установка value для каждого элемента с сервера 
+//   Установка value для каждого элемента с сервера 
   const getValue = (parentSelector) => {
     parentSelector.addEventListener('change', function() {
       getResource('assets/prices.json')
@@ -31,9 +31,9 @@ function calc(size, material, options, promocode, result) {
         // Устанавливаем цену: текстовое содержание блока и ключ в json равны
         function setValue(response) {
           response.forEach((key) => {
-            if (key === parentSelector.childNodes.textContent) {
-              parentSelector.childNodes.setAttribute('value', parentSelector[key]);
-              // console.log(parentSelector.childNodes.value);
+            if (key === parentSelector.childNode.textContent) {
+              parentSelector.childNode = parentSelector[key];
+              console.log(parentSelector.childNodes.value);
             }
           });  
         }
