@@ -2,102 +2,60 @@
 
 const filter = () => {
   const menu = document.querySelector('.portfolio-menu'),
-        btns = menu.querySelectorAll('li'),
-        btnAll = menu.querySelector('.all'),
-        // btnLovers = menu.querySelector('.lovers'),
-        // btnChef = menu.querySelector('.chef'),
-        // btnGirl = menu.querySelector('.girl'),
-        // btnGuy = menu.querySelector('.guy'),
-        // btnGrandmother = menu.querySelector('.grandmother'),
-        // btnGranddad = menu.querySelector('.granddad'),
+        allButtons = menu.querySelectorAll('li'),
         wrapper = document.querySelector('.portfolio-wrapper'),
-        markAll = wrapper.querySelectorAll('.all'),
-        // markLovers = wrapper.querySelectorAll('.lovers'),
-        // markChef = wrapper.querySelectorAll('.chef'),
-        // markGirl = wrapper.querySelectorAll('.girl'),
-        // markGuy = wrapper.querySelectorAll('.guy'),
-        no = document.querySelector('.portfolio-no');
+        allImages = wrapper.querySelectorAll('.all'),
+        noImagesBlock = document.querySelector('.portfolio-no');
   
-  const filterTypes = (markType) => {
-    markAll.forEach(mark => {
-      mark.style.display = 'none';
-      mark.classList.remove('animated', 'fadeIn');
-    });
-    
-    no.style.display = "none";
-    no.classList.remove('animated', 'fadeIn');
-    
-    if(markType) {
-      markType.forEach(mark => {
-        mark.style.display = "block";
-        mark.classList.add('animated', 'fadeIn');
-      });
-    } else {
-      no.style.display = "block";
-      no.classList.add('animated', 'fadeIn');
-    }
-  }
-  
-// Переменная с классом от меню
-// Условие - если wrapper содержит такой же класс
-// запустить функцию фильтр
-// запуск функции со всеми классами
-// не работает portfolip no - следует вписать функцию filterTypes в функцию initFilterTypes
-// возможно добавить туда же условие по переклчению активного класса
-
-const initFilterTypes = (selector) => {
-  const buttons = menu.querySelectorAll(selector),
-        images = wrapper.querySelectorAll(selector);
-
+const initFilterTypes = (btnSelector, imgSelector) => {
+  const buttons = menu.querySelectorAll(btnSelector);
+        
   buttons.forEach(button => {
-    button.addEventListener('click', () => {
-          filterTypes(images);
+    button.addEventListener('click', (e) => {
+      if (e.target && e.target.tagName === 'LI') {
+        allButtons.forEach(item => {
+          item.classList.remove('active');
+          e.target.classList.add('active');
+        })
+      }
+      
+      // Работа с изображениями
+      allImages.forEach(item => {
+        item.style.display = 'none';
+        item.classList.remove('animated', 'fadeIn');
+      });
+      
+      noImagesBlock.style.display = "none";
+      noImagesBlock.classList.remove('animated', 'fadeIn');
+      
+      if(imgSelector) {
+        const images = wrapper.querySelectorAll(imgSelector);
+        
+        images.forEach(image => {
+          image.style.display = "block";
+          image.classList.add('animated', 'fadeIn');
+        });
+      } else {
+        noImagesBlock.style.display = "block";
+        noImagesBlock.classList.add('animated', 'fadeIn');
+      }
     });
   }) 
 }
   
-initFilterTypes('.all');
-initFilterTypes('.lovers');
-initFilterTypes('.chef');
-initFilterTypes('.girl');
-initFilterTypes('.guy');
+initFilterTypes('.all', '.all');
+initFilterTypes('.lovers', '.lovers');
+initFilterTypes('.chef', '.chef');
+initFilterTypes('.girl', '.girl');
+initFilterTypes('.guy', '.guy');
 initFilterTypes('.grandmother');
 initFilterTypes('.granddad');
 
   
-  // btnAll.addEventListener('click', () => {
-  //   filterTypes(markAll);
-  // });
-  // btnLovers.addEventListener('click', () => {
-  //   filterTypes(markLovers);
-  // });
-  // btnChef.addEventListener('click', () => {
-  //     filterTypes(markChef);
-  // });
-  // btnGirl.addEventListener('click', () => {
-  //   filterTypes(markGirl);
-  // });
-  // btnGuy.addEventListener('click', () => {
-  //   filterTypes(markGuy);
-  // });
-  // btnGrandmother.addEventListener('click', () => {
-  //     filterTypes();
-  // });
-  // btnGranddad.addEventListener('click', () => {
+  // itemGranddad.addEventListener('click', () => {
   //   filterTypes();
   // });
 
-  menu.addEventListener('click', (e) => {
-    let target = e.target;
-  
-    // Сделать кнопку активной
-    if (target && target.tagName === 'LI') {
-      btns.forEach(btn => {
-        btn.classList.remove('active');
-        target.classList.add('active');
-      })
-    }
-  })
 };
 
 export default filter;
