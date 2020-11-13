@@ -6,21 +6,49 @@ function calc(size, material, options, promocode, result) {
         materialBlock = document.querySelector(material),
         optionsBlock = document.querySelector(options),
         promoCodeBlock = document.querySelector(promocode),
-        resultBlock = document.querySelector(result);
+        resultBlock = document.querySelector(result),
+        selectOption = document.querySelectorAll('.calc-form > select > option');
   
   let sum = 0;
   
+  // // Функция, которая навешивает обработчик события на change
+  // const setValue = (parentSelector) => {
+  //   parentSelector.addEventListener('change', function() {
+  //   getResource('assets/prices.json')
+  //     .then(result => {
+  //       result.forEach(({ text, value }) => {
+    
+  //         let option = document.createElement('option');
+  //         option.innerHTML = 
+  //           `
+  //             <option value=${value}>
+  //             ${text}
+  //             </option>
+  //           `;
+  //           parentSelector.append(option);
+    
+  //       });    
+  //     })
+  //   console.log(parentSelector.value);
+  //   });
+  // }
+    
+  // setValue(sizeBlock);
   
-// Реализовать функционал когда value устанавливается динамически из файла prices.json
-// При событии change - обращаемся к этому файлу, получаем у него значение и устанавливаем в качестве value option'a 
+  
+//   console.log(selectOption);
+// // Реализовать функционал когда value устанавливается динамически из файла prices.json
+// // При событии change - обращаемся к этому файлу, получаем у него значение и устанавливаем в качестве value option'a 
 
-// Сделать через innerHTML???
+// // Сделать через innerHTML???
 
 //   Установка value для каждого элемента с сервера 
   const getValue = (parentSelector) => {
     parentSelector.addEventListener('change', function() {
       getResource('assets/prices.json')
-        .then(res => setValue(res))
+        .then(res => {
+        selectOption.forEach(option => setValue(res.size, option));
+        })
   
         .catch(error => {
           const errorMessage = document.createElement('div');
@@ -32,12 +60,11 @@ function calc(size, material, options, promocode, result) {
   }
   
         // Устанавливаем цену: текстовое содержание блока и ключ в json равны
-        function setValue(response) {
+        function setValue(response, selector) {
           response.forEach(({ text, value }) => {
-            if (text === parentSelector.childNodes.textContent) {
-              parentSelector.childNodes.setAttribute('value', value);
-              console.log(parentSelector.childNodes.value);
-            }
+          if (text === selector.innerHTML) {
+            selector.setAttribute(value, value);
+          }
           });  
         }
           
