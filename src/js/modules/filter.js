@@ -1,3 +1,5 @@
+
+
 const filter = () => {
   const menu = document.querySelector('.portfolio-menu'),
         btns = menu.querySelectorAll('li'),
@@ -9,7 +11,6 @@ const filter = () => {
         // btnGrandmother = menu.querySelector('.grandmother'),
         // btnGranddad = menu.querySelector('.granddad'),
         wrapper = document.querySelector('.portfolio-wrapper'),
-        imgs = wrapper.querySelectorAll('div'),
         markAll = wrapper.querySelectorAll('.all'),
         // markLovers = wrapper.querySelectorAll('.lovers'),
         // markChef = wrapper.querySelectorAll('.chef'),
@@ -35,18 +36,34 @@ const filter = () => {
       no.style.display = "block";
       no.classList.add('animated', 'fadeIn');
     }
-  
   }
   
-  const initFilter  = (buttons, images) => {
-    buttons.forEach(button => {
-      if (button.classList === images.classList) {
-        button.addEventListener('click', filterTypes(images))
-      }
-    })
-  };
+// Переменная с классом от меню
+// Условие - если wrapper содержит такой же класс
+// запустить функцию фильтр
+// запуск функции со всеми классами
+// не работает portfolip no - следует вписать функцию filterTypes в функцию initFilterTypes
+// возможно добавить туда же условие по переклчению активного класса
+
+const initFilterTypes = (selector) => {
+  const buttons = menu.querySelectorAll(selector),
+        images = wrapper.querySelectorAll(selector);
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+          filterTypes(images);
+    });
+  }) 
+}
   
-  initFilter(btns, imgs);
+initFilterTypes('.all');
+initFilterTypes('.lovers');
+initFilterTypes('.chef');
+initFilterTypes('.girl');
+initFilterTypes('.guy');
+initFilterTypes('.grandmother');
+initFilterTypes('.granddad');
+
   
   // btnAll.addEventListener('click', () => {
   //   filterTypes(markAll);
@@ -72,15 +89,15 @@ const filter = () => {
 
   menu.addEventListener('click', (e) => {
     let target = e.target;
-    
+  
+    // Сделать кнопку активной
     if (target && target.tagName === 'LI') {
       btns.forEach(btn => {
         btn.classList.remove('active');
         target.classList.add('active');
       })
     }
-  });
-
+  })
 };
 
 export default filter;
